@@ -21,43 +21,64 @@ interface PokemonDetailProps {
 const PokemonDetailDialog = (props: PokemonDetailProps) => {
   const slides = [{ src: props.pokemonDetail?.sprites?.front_default }, { src: props.pokemonDetail?.sprites?.back_default }];
 
-  return (
-    <BottomSheet isActive={props.isActive} deactive={props.deactive} handlerColor={TypeToColor(props.pokemonDetail?.types ? props.pokemonDetail?.types[0].type.name : 'white')}>
-      <ProfilePokemonContent slides={slides} pokeName={props.choosenPokemon?.name.replaceAll('-', ' ')} pokeTypes={props.pokemonDetail?.types} />
-      <PageContainer>
-        <AboutPokemonContent pokemonDetail={props.pokemonDetail} />
+  useEffect(() => {
+    if (props.isActive && typeof document !== 'undefined' && typeof window !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [props.isActive]);
 
-        <StatsPokemonContent
-          pokemonDetail={props.pokemonDetail}
-          className={css`
-            margin-top: 40px;
-          `}
-        />
-        <MovesPokemonContent
-          pokemonDetail={props.pokemonDetail}
-          className={css`
-            margin-top: 40px;
-          `}
-        />
-        <BottomMarker />
-        <BottomMarker />
-      </PageContainer>
+  return props.isActive ? (
+    <div
+      className={css`
+        position: fixed;
+        top: 0;
+        z-index: 30;
+        width: 100%;
+        max-width: 720px;
+        background-color: white;
+      `}>
       <div
         className={css`
-          position: fixed;
-          bottom: 0;
-          padding-bottom: 16px;
-          width: 100%;
-          max-width: 720px;
-          padding-top: 8px;
-          background-color: white;
-          padding-left: 16px;
-          padding-right: 16px;
+          overflow: scroll;
         `}>
-        <ButtonInput type="primary" label="Add to Collection" onClick={props.catchOnClick} />
+        <ProfilePokemonContent slides={slides} pokeName={props.choosenPokemon?.name.replaceAll('-', ' ')} pokeTypes={props.pokemonDetail?.types} />
+        <PageContainer>
+          <AboutPokemonContent pokemonDetail={props.pokemonDetail} />
+
+          <StatsPokemonContent
+            pokemonDetail={props.pokemonDetail}
+            className={css`
+              margin-top: 40px;
+            `}
+          />
+          <MovesPokemonContent
+            pokemonDetail={props.pokemonDetail}
+            className={css`
+              margin-top: 40px;
+            `}
+          />
+          <BottomMarker />
+          <BottomMarker />
+        </PageContainer>
+        <div
+          className={css`
+            position: fixed;
+            bottom: 0;
+            padding-bottom: 16px;
+            width: 100%;
+            max-width: 720px;
+            padding-top: 8px;
+            background-color: white;
+            padding-left: 16px;
+            padding-right: 16px;
+          `}>
+          <ButtonInput type="primary" label="Add to Collection" onClick={props.catchOnClick} />
+        </div>
       </div>
-    </BottomSheet>
-  );
+    </div>
+  ) : null;
 };
 
 export default PokemonDetailDialog;

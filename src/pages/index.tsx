@@ -1,9 +1,7 @@
 import { css } from '@emotion/css';
 import React, { useEffect, useState } from 'react';
-import { PokemonData } from '../apollo/gql/pokemons';
 import PageContainer from '../components/atoms/containers/page-container';
 import ButtonInput from '../components/molecules/inputs/button-input';
-import PokemonCard from '../components/molecules/cards/pokemon-card';
 import BasicHeader from '../components/molecules/headers/basic-header';
 import { getLocalStorage, removeLocalStorageArray } from '../helpers/local-storage';
 import { COLOR_PALETTE, font_color, font_leading, font_size } from '../helpers/styling-helper';
@@ -11,6 +9,7 @@ import CollectedCard from '../components/molecules/cards/collected-card';
 import { useRouter } from 'next/dist/client/router';
 import { MdAddToPhotos } from 'react-icons/md';
 import Head from 'next/head';
+import BottomMarker from '../components/atoms/markers/bottom-markers';
 
 export default function Home() {
   const [pokeData, setPokeData] = useState([]);
@@ -32,7 +31,15 @@ export default function Home() {
         <title>Pokémon graphql</title>
       </Head>
       <BasicHeader label="Pokémon" />
-      <PageContainer>
+      <div
+        className={css`
+          position: sticky;
+          top: 0;
+          z-index: 30;
+          background: white;
+          padding-left: 16px;
+          padding-right: 16px;
+        `}>
         <div
           className={css`
             padding: 16px;
@@ -108,6 +115,9 @@ export default function Home() {
             onClick={() => router.push('/pokedex')}
           />
         </div>
+      </div>
+
+      <PageContainer>
         <div>
           {pokeData.length ? (
             <div>
@@ -154,6 +164,8 @@ export default function Home() {
             </div>
           )}
         </div>
+        <BottomMarker />
+        <BottomMarker />
       </PageContainer>
     </div>
   );

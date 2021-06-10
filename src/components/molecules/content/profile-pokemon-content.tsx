@@ -41,7 +41,7 @@ const ProfilePokemonContent = (props: ProfilPokemonProps): React.ReactElement =>
     <div>
       <div
         className={css`
-          background-color: ${TypeToColor(props.pokeTypes[0]?.type.name)};
+          background-color: ${TypeToColor(props.pokeTypes ? props.pokeTypes[0].type.name : 'white')};
           padding-bottom: 16px;
         `}>
         <CarouselContainer selected={selected} selectCallback={handleSelectCallback}>
@@ -78,7 +78,7 @@ const ProfilePokemonContent = (props: ProfilPokemonProps): React.ReactElement =>
           grid-column-gap: 8px;
           text-transform: capitalize;
         `}>
-        {props.pokeTypes.map((poke: any, i: number) => {
+        {props.pokeTypes?.map((poke: any, i: number) => {
           return (
             <BadgesContainer key={i} fontColor="white" backgroundColor={TypeToColor(poke.type.name)}>
               {poke.type.name}

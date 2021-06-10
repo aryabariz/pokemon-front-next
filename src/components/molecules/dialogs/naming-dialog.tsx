@@ -26,7 +26,7 @@ const NamingDialog = (props: NamingDialogProps) => {
         max-width: 720px;
         padding-right: 16px;
         padding-left: 16px;
-        z-index: 20;
+        z-index: 70;
       `}>
       <div
         className={css`
