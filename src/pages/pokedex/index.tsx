@@ -13,6 +13,7 @@ import LoadingPage from '../../components/molecules/loading/loading';
 import NamingDialog from '../../components/molecules/dialogs/naming-dialog';
 import Pagination from '../../components/organism/pagination/pagination';
 import { COLOR_PALETTE } from '../../helpers/styling-helper';
+import Head from 'next/head';
 
 export default function Pokedex() {
   const Skeleton = () => {
@@ -92,9 +93,11 @@ export default function Pokedex() {
 
   return (
     <div>
+      <Head>
+        <title>Pokédex graphql</title>
+      </Head>
       <NavigationHeader label="Pokédex" />
       <PageContainer>
-
         {pokemonListLoading ? (
           <Skeleton />
         ) : (

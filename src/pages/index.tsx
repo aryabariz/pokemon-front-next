@@ -10,6 +10,7 @@ import { COLOR_PALETTE, font_color, font_leading, font_size } from '../helpers/s
 import CollectedCard from '../components/molecules/cards/collected-card';
 import { useRouter } from 'next/dist/client/router';
 import { MdAddToPhotos } from 'react-icons/md';
+import Head from 'next/head';
 
 export default function Home() {
   const [pokeData, setPokeData] = useState([]);
@@ -27,6 +28,9 @@ export default function Home() {
   }, []);
   return (
     <div>
+      <Head>
+        <title>Pokémon graphql</title>
+      </Head>
       <BasicHeader label="Pokémon" />
       <PageContainer>
         <div
