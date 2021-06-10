@@ -4,16 +4,17 @@ import React, { useState } from 'react';
 import PageContainer from '../../components/atoms/containers/page-container';
 import PokemonCard from '../../components/molecules/cards/pokemon-card';
 import GetPokemonsList, { PokemonData } from '../../apollo/gql/pokemons';
-import GetPokemonDetail from '../../apollo/gql/pokemon';
+// import GetPokemonDetail from '../../apollo/gql/pokemon';
 import BottomMarker from '../../components/atoms/markers/bottom-markers';
-import { addLocalStorageArray, getLocalStorage, removeLocalStorageArray } from '../../helpers/local-storage';
-import PokemonDetailDialog from '../../components/templates/pokemon-detail';
-import Snackbar from '../../components/molecules/snackbar/snackbar';
-import LoadingPage from '../../components/molecules/loading/loading';
-import NamingDialog from '../../components/molecules/dialogs/naming-dialog';
+// import { addLocalStorageArray, getLocalStorage, removeLocalStorageArray } from '../../helpers/local-storage';
+// import PokemonDetailDialog from '../../components/templates/pokemon-detail';
+// import Snackbar from '../../components/molecules/snackbar/snackbar';
+// import LoadingPage from '../../components/molecules/loading/loading';
+// import NamingDialog from '../../components/molecules/dialogs/naming-dialog';
 import Pagination from '../../components/organism/pagination/pagination';
 import { COLOR_PALETTE } from '../../helpers/styling-helper';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 export default function Pokedex() {
   const Skeleton = () => {
@@ -63,33 +64,19 @@ export default function Pokedex() {
   const [offset, setOffset] = useState(0);
   const [selected, setSelected] = useState(0);
 
-  const [choosenPokemon, setChoosenPokemon] = useState<PokemonData>();
-  const [showBottomsheet, setShowBottomsheet] = useState(false);
+  const router = useRouter();
+  // const [choosenPokemon, setChoosenPokemon] = useState<PokemonData>();
+  // const [showBottomsheet, setShowBottomsheet] = useState(false);
   const { pokemonList, pokemonTotal, pokemonListLoading } = GetPokemonsList(limit, offset);
-  const { pokemonDetail, pokemonLoading } = GetPokemonDetail(choosenPokemon?.name || '');
+  // const { pokemonDetail, pokemonLoading } = GetPokemonDetail(choosenPokemon?.name || '');
 
-  const [showFail, setShowFail] = useState(false);
-  const [showFailCancel, setShowFailCancel] = useState(false);
-  const [showSucess, setShowSucess] = useState(false);
+  // const [showFail, setShowFail] = useState(false);
+  // const [showFailCancel, setShowFailCancel] = useState(false);
+  // const [showSucess, setShowSucess] = useState(false);
 
-  const [pokeNickName, setPokeNickName] = useState('');
+  // const [pokeNickName, setPokeNickName] = useState('');
 
   const pokeMax = Math.round(pokemonTotal! / limit);
-  function addPokemonLocal() {
-    const data = { ...choosenPokemon, nickname: pokeNickName.length ? pokeNickName : 'Unamed', type: pokemonDetail?.types[0]?.type.name };
-    addLocalStorageArray('tes', data);
-    setShowSucess(false);
-    setPokeNickName('');
-  }
-
-  function CatchProbability() {
-    setShowBottomsheet(false);
-    if (Math.random() > 0.5) {
-      setShowSucess(true);
-    } else {
-      setShowFail(true);
-    }
-  }
 
   return (
     <div>
@@ -119,8 +106,7 @@ export default function Pokedex() {
                 <div key={i}>
                   <PokemonCard
                     onClick={() => {
-                      setChoosenPokemon({ ...poke });
-                      setShowBottomsheet(true);
+                      router.push({ pathname: '/pokedex' + '/' + poke.name });
                     }}
                     pokeName={poke.name.replaceAll('-', ' ')}
                     pokeSrc={poke.image}
@@ -158,7 +144,7 @@ export default function Pokedex() {
         }}
         selected={selected}
       />
-      <Snackbar actionLabel="OK" label="Failed to Catch, Try Again" actionOnClick={() => setShowFail(false)} active={showFail} deactive={() => setShowFail(false)} />
+      {/* <Snackbar actionLabel="OK" label="Failed to Catch, Try Again" actionOnClick={() => setShowFail(false)} active={showFail} deactive={() => setShowFail(false)} />
       <Snackbar actionLabel="Sad" label="Whyy you cancel, :sad-emot:" actionOnClick={() => setShowFailCancel(false)} active={showFailCancel} deactive={() => setShowFailCancel(false)} />
       <PokemonDetailDialog catchOnClick={CatchProbability} choosenPokemon={choosenPokemon} pokemonDetail={pokemonDetail} isActive={showBottomsheet && !pokemonLoading} deactive={() => setShowBottomsheet(false)} />
       <LoadingPage active={pokemonLoading} />
@@ -171,7 +157,7 @@ export default function Pokedex() {
         primaryOnClick={addPokemonLocal}
         value={pokeNickName}
         onChange={(e: any) => setPokeNickName(e.target.value)}
-      />
+      /> */}
     </div>
   );
 }

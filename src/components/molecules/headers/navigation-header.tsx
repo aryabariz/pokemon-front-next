@@ -30,6 +30,7 @@ const NavigationHeader = (props: DefaultHeaderProps) => {
       className={css`
         position: sticky;
         top: 0;
+        z-index: 40;
       `}>
       <ActionContainer used={true} onClick={() => router.back()}>
         <MdKeyboardArrowLeft size="32px" />
